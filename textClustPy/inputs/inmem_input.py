@@ -1,15 +1,5 @@
 from abc import ABC, abstractmethod
 
-import sys
-
-import json
-import pandas as pd
-
-import string
-import csv
-import time
-
-
 from textClustPy import Input
 from textClustPy import Observation
 
@@ -43,7 +33,12 @@ class InMemInput(Input):
     
         # create iterator 
         self.reader =  self.data.itertuples(index=False)
-
+    
+    def update_dataframe(self, pdframe):
+        # update instance variable
+        self.data =  pdframe
+        # update iterator 
+        self.reader =  self.data.itertuples(index=False)
         
     
     def run(self):
