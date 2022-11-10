@@ -140,7 +140,7 @@ class textclust:
         self.dist_mean = 0
         self.outlier_dist_square = 0
         # log settings
-        logger.info("---------------------------------------------------------")
+        '''logger.info("---------------------------------------------------------")
         logger.info("Starting textclust with the following configuration: ")
         logger.info("radius: {}".format(self.radius))
         logger.info("_lambda: {}".format(self._lambda))
@@ -157,22 +157,22 @@ class textclust:
         logger.info("minWeight: {}".format(self.minWeight))
         logger.info("auto_r: {}".format(self.auto_r))
         logger.info("auto_merge: {}".format(self.auto_merge))
-        logger.info("---------------------------------------------------------")
+        logger.info("---------------------------------------------------------")'''
 
         # if word embeddings are used, models have to be initialized
         if(self.model is not None and isinstance(self.model, str)):
-            logger.info("loading pre-trained word embedding model")
+            #logger.info("loading pre-trained word embedding model")
             self.model = api.load(self.model)
-            logger.info("normalize model")
+            #logger.info("normalize model")
             self.model.init_sims(replace=True)
-            logger.info("model normalized")
+            #logger.info("model normalized")
 
         # create a new distance instance for micro and macro distances.
         # from now the correct distance measure, specified in the config is used
         self.micro_distance = distances(self.micro_distance, self.model)
         self.macro_distance = distances(self.macro_distance, self.model)
-        logger.info("distance metrics loaded")
-        logger.info("---------------------------------------------------------")
+        '''logger.info("distance metrics loaded")
+        logger.info("---------------------------------------------------------")'''
 
     # load config file
     def loadconfig(self, filename):
@@ -487,8 +487,8 @@ class textclust:
     def showmicrocluster(self, id, num):
 
         micro = self.microclusters[id]
-        logger.info("-------------------------------------------")
-        logger.info("Summary of microcluster: " + str(id))
+        '''logger.info("-------------------------------------------")
+        logger.info("Summary of microcluster: " + str(id))'''
 
         # sort micro cluster terms according to ther frequency
         indices = sorted(range(len([i["tf"] for i in micro.tf.values()])),
@@ -497,8 +497,8 @@ class textclust:
         # get representative for micro cluster
         representatives = [list(micro.tf.keys())[i]
                            for i in indices[0:min(len(micro.tf.keys()), num)]]
-        logger.info(representatives)
-        logger.info("-------------------------------------------")
+        '''logger.info(representatives)
+        logger.info("-------------------------------------------")'''
 
     # show top micro/macro clusters (according to weight)
     def showclusters(self, topn, num, type="micro"):
@@ -520,14 +520,14 @@ class textclust:
             sortedmicro = sorted(self.getmacroclusters(
             ).values(), key=lambda x: x.weight, reverse=True)
 
-        logger.info("-------------------------------------------")
-        logger.info("Summary of " + type + " clusters:")
+        '''logger.info("-------------------------------------------")
+        logger.info("Summary of " + type + " clusters:")'''
 
         for micro in sortedmicro[0:topn]:
             # print(micro.tf)
-            logger.info("----")
+            '''logger.info("----")
             logger.info("micro cluster id " + str(micro.id))
-            logger.info("micro cluster weight " + str(micro.weight))
+            logger.info("micro cluster weight " + str(micro.weight))'''
 
             # get indices of top terms
             indices = sorted(range(len([i["tf"] for i in micro.tf.values()])),
@@ -541,7 +541,7 @@ class textclust:
                     "weight: " + str(round(rep[1], 2))+"\t token: " + str(rep[0]).expandtabs(10))
             # logger.info(representatives)
 
-        logger.info("-------------------------------------------")
+        '''logger.info("-------------------------------------------")'''
 
     # get top n micro clusters
     def gettopmicrocluster(self, topn):
